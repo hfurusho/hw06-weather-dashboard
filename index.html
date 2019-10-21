@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <title>Weather Dashboard</title>
+  </head>
+  <body>
+    <header>
+      <div class="container-fluid text-center border-bottom">
+        <h1>Weather Dashboard</h1>
+      </div>
+    </header>
+    <div class="container-fluid my-3">
+      <div class="row">
+        <div class="col-md-3 sidebar h-100">
+          <form class="form-group">
+            <label for="formGroupExampleInput"
+              ><h4>Search for a City:</h4></label
+            >
+            <div class="form-inline">
+              <input
+                type="text"
+                class="form-control w-75"
+                id="formGroupExampleInput"
+              />
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+          <div class="card">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="row weather-conditions">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Optio provident cupiditate quidem ipsam officiis. Atque,
+                    accusamus reprehenderit repellendus eaque nesciunt et
+                    doloribus laboriosam, ut, eum sint repellat quia blanditiis
+                    molestiae. Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Optio provident cupiditate quidem ipsam
+                    officiis. Atque, accusamus reprehenderit repellendus eaque
+                    nesciunt et doloribus laboriosam, ut, eum sint repellat quia
+                    blanditiis molestiae.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <h3>5 Day Forecast</h3>
+            </div>
+            <div class="col-md">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Optio provident cupiditate quidem ipsam officiis.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Optio provident cupiditate quidem ipsam officiis.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Optio provident cupiditate quidem ipsam officiis.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Optio provident cupiditate quidem ipsam officiis.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Optio provident cupiditate quidem ipsam officiis.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./scripts/app.js"></script>
+  </body>
+</html>
