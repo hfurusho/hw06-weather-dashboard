@@ -29,16 +29,14 @@
       <div class="row">
         <div class="col-md-3 sidebar h-100">
           <form class="form-group">
-            <label for="formGroupExampleInput"
-              ><h4>Search for a City:</h4></label
-            >
+            <label for="citySearch"><h4>Search for a City:</h4></label>
             <div class="form-inline">
               <input
                 type="text"
                 class="form-control w-75"
-                id="formGroupExampleInput"
+                id="citySearchText"
               />
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" id="citySearchBtn">
                 <i class="fas fa-search"></i>
               </button>
             </div>
@@ -56,12 +54,16 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">The City</h3>
+                  <h3 class="card-title">
+                    <span id="currentCity"></span>
+                    <span id="todaysDate"></span>
+                    <img src="" alt="" id="currentWeatherIcon" />
+                  </h3>
                   <ul class="card-text current-weather-conditions">
-                    <li>Temperature: <span id="todays-temp"></span></li>
-                    <li>Humidity: <span id="todays-humidity"></span></li>
-                    <li>Wind Speed: <span id="todays-wind-speed"></span></li>
-                    <li>UV Index: <span id="todays-uv-index"></span></li>
+                    <li>Temperature: <span id="todaysTemp"></span> &degF</li>
+                    <li>Humidity: <span id="todaysHumidity"></span>%</li>
+                    <li>Wind Speed: <span id="todaysWindSpeed"></span> MPH</li>
+                    <li>UV Index: <span id="todaysUvIndex"></span></li>
                   </ul>
                 </div>
               </div>
