@@ -2,3 +2,29 @@
   list-style-type: none;
   padding: 0;
 }
+
+.uv-low {
+  background-color: green;range;
+}
+
+.uv-mod {
+  background-color: yellow;range;
+}
+
+.uv-high {
+  background-color: orange;
+}
+
+.uv-very-high {
+  background-color: red;
+}
+
+.uv-ext {
+  background-color: violet;
+}
+
+.uv-low,
+.uv-very-high,
+uv.uv-ext {
+  color: white;
+}

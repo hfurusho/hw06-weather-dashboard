@@ -13,25 +13,54 @@ function getWeatherConditions() {
   $.ajax({
     url: queryURL,
     method: "GET"
-  }).then(function(response) {
-    populateCurrentWeatherConditions(response);
+  }).then(function(results) {
+    console.log(results);
+    populateCurrentWeatherConditions(results);
   });
 }
 
 function populateCurrentWeatherConditions(results) {
   let cityName = results.name;
+  let today = new Date();
   let temperature = results.main.temp;
   let humidity = results.main.humidity;
   let windSpeed = results.wind.speed;
-  let currentWeather = results.weather.main;
+  let currentWeather = results.weather[0].main;
   let iconURL = `http://openweathermap.org/img/w/${results.weather[0].icon}.png`;
+  let lon = results.coord.lon;
+  let lat = results.coord.lat;
 
   $("#currentCity").text(cityName);
-  $("#todaysDate").text("(10/21/29)"); // TODO: Get current date and format.
+  $("#todaysDate").text(
+    `(${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()})`
+  ); // USE result.dt time (unix) and convert
   $("#currentWeatherIcon").attr("src", iconURL);
   $("#currentWeatherIcon").attr("alt", currentWeather + " icon");
   $("#todaysTemp").text(temperature);
   $("#todaysHumidity").text(humidity);
   $("#todaysWindSpeed").text(windSpeed);
-  $("#todaysUvIndex").text();
+
+  populateCurrentUVIndex(lon, lat);
+}
+
+function populateCurrentUVIndex(lon, lat) {
+  let UVIndexURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${APIKEY}&lat=${lat}&lon=${lon}`;
+  $.ajax({
+    url: UVIndexURL,
+    method: "GET"
+  }).then(function(results) {
+    let UVIndex = results.value;
+    $("#todaysUVIndex").text(UVIndex);
+    if (UVIndex < 3) {
+      $("#todaysUVIndex").addClass("uv-low");
+    } else if (UVIndex < 6) {
+      $("#todaysUVIndex").addClass("uv-mod");
+    } else if (UVIndex < 8) {
+      $("#todaysUVIndex").addClass("uv-high");
+    } else if (UVIndex < 11) {
+      $("#todaysUVIndex").addClass("uv-very-high");
+    } else {
+      $("#todaysUVIndex").addClass("uv-ext");
+    }
+  });
 }
