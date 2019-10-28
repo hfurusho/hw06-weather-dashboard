@@ -53,6 +53,8 @@ function getCurrentWeatherConditions(citySearched) {
       searchHistory[i].cityName.toLowerCase() == citySearched &&
       timeNow < searchHistory[i].dt * 1000 + 600000
     ) {
+      console.log("SH TIME: ", searchHistory[i].dt * 1000 + 600000);
+      console.log("TIME NOW: ", timeNow);
       for (let j = 0; j < storedWeatherData.data.currentWeather.length; j++) {
         if (
           storedWeatherData.data.currentWeather[j].name.toLowerCase() ==
@@ -184,8 +186,7 @@ function populateForecast(results) {
     let time = list[i].dt_txt.split(" ")[1];
 
     if (time == "12:00:00") {
-      let colDiv = $("<div class='col'>");
-      let cardDiv = $("<div class='card forecast-card'>");
+      let cardDiv = $("<div class='card forecast-card mx-2 shadow'>");
       let cardBodyDiv = $("<div class='card-body'>");
 
       let dateDiv = $("<div class='forecast-date'>");
@@ -202,8 +203,7 @@ function populateForecast(results) {
 
       cardBodyDiv.append(dateDiv, imgElem, pTemp, pHumid);
       cardDiv.append(cardBodyDiv);
-      colDiv.append(cardDiv);
-      $("#forecast").append(colDiv);
+      $("#forecast").append(cardDiv);
 
       daysForecasted++;
     }

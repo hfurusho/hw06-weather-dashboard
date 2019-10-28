@@ -38,6 +38,11 @@
 
 #citySearchBtn {
   background-color: #6d6dfd;
+  transition: background-color 250ms ease-in-out;
+}
+
+#citySearchBtn:hover {
+  background-color: #6db5fd;
 }
 
 #forecastHeader {
@@ -46,4 +51,15 @@
 
 #searchResults {
   display: none;
+}
+
+#searchHistoryList li {
+  cursor: pointer;
+  color: white;
+  background-color: #6d6dfd;
+  transition: background-color 300ms ease-in-out;
+}
+
+#searchHistoryList li:hover {
+  background-color: #6db5fd;
 }
