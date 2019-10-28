@@ -3,13 +3,14 @@ populateSearchHistory();
 
 $("#citySearchBtn").on("click", function(event) {
   event.preventDefault();
-  let citySearched = $("#citySearchText").val(); // TODO: Uncomment for live version.
+  let citySearched = $("#citySearchText").val();
   $("#citySearchText").val("");
   $("#searchResults").fadeIn();
   getCurrentWeatherConditions(citySearched);
   getFiveDayForecast(citySearched);
 });
 
+// Shows the user's previous searches in the sidebar so they can quickly switch between.
 function populateSearchHistory() {
   $("#searchHistoryList").empty();
   let searchHistory = getStoredWeatherData().searchHistory;
@@ -27,6 +28,8 @@ function populateSearchHistory() {
   }
 }
 
+// Returns the weather data of the user's previous searches so that less API calls will be made,
+// or returns an empty structure if no data has been stored yet.
 function getStoredWeatherData() {
   let storedWeatherData = JSON.parse(localStorage.getItem("storedWeatherData"));
   if (!storedWeatherData) {
@@ -42,6 +45,8 @@ function getStoredWeatherData() {
   }
 }
 
+// Looks in local storage for the weather data of the user's search or will
+// makes an API call to get the current weather if not in storage.
 function getCurrentWeatherConditions(citySearched) {
   let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${citySearched}&units=imperial&appid=${APIKEY}`;
   let storedWeatherData = getStoredWeatherData();
@@ -53,8 +58,6 @@ function getCurrentWeatherConditions(citySearched) {
       searchHistory[i].cityName.toLowerCase() == citySearched &&
       timeNow < searchHistory[i].dt * 1000 + 600000
     ) {
-      console.log("SH TIME: ", searchHistory[i].dt * 1000 + 600000);
-      console.log("TIME NOW: ", timeNow);
       for (let j = 0; j < storedWeatherData.data.currentWeather.length; j++) {
         if (
           storedWeatherData.data.currentWeather[j].name.toLowerCase() ==
@@ -77,6 +80,7 @@ function getCurrentWeatherConditions(citySearched) {
   });
 }
 
+// Stores the current weather data of the API call.
 function storeCurrentWeather(results) {
   let storedWeatherData = getStoredWeatherData();
   let searchHistoryEntry = {
@@ -88,6 +92,8 @@ function storeCurrentWeather(results) {
   localStorage.setItem("storedWeatherData", JSON.stringify(storedWeatherData));
 }
 
+// Takes the current weather data either from local storage or an API call
+// and populates the screen with the data.
 function populateCurrentWeatherConditions(results) {
   let cityName = results.name;
   let date = new Date(results.dt * 1000);
@@ -113,6 +119,8 @@ function populateCurrentWeatherConditions(results) {
   populateUVIndex(lon, lat);
 }
 
+// Locates the UV Index of the searched city in local storage
+// or makes an API call to obtain the data.
 function populateUVIndex(lon, lat) {
   let UVIndexURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${APIKEY}&lat=${lat}&lon=${lon}`;
   $.ajax({
@@ -138,6 +146,8 @@ function populateUVIndex(lon, lat) {
   });
 }
 
+// Looks in local storage for the forecast of the searched city
+// or makes an API call if it isn't found.
 function getFiveDayForecast(citySearched) {
   let storedWeatherData = getStoredWeatherData();
   let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${citySearched}&units=imperial&appid=${APIKEY}`;
@@ -171,6 +181,8 @@ function getFiveDayForecast(citySearched) {
   });
 }
 
+// Stores the forecast of the searched city to local storage
+// if it wasn't found.
 function storeForecast(results, citySearched) {
   citySearched = citySearched.toLowerCase().trim();
   let storedWeatherData = getStoredWeatherData();
@@ -178,6 +190,8 @@ function storeForecast(results, citySearched) {
   localStorage.setItem("storedWeatherData", JSON.stringify(storedWeatherData));
 }
 
+// Takes the forecast data from local storage or an API call and
+// populates the forecast results to the DOM.
 function populateForecast(results) {
   $("#forecast").empty();
   let list = results.list;
@@ -211,6 +225,7 @@ function populateForecast(results) {
   populateSearchHistory();
 }
 
+// Formats the openweathermaps API date format to "MM/DD/YYY"
 function formatDate(date) {
   let arr = date.split(" ")[0].split("-");
   let formattedDate = `${arr[1]}/${arr[2]}/${arr[0]}`;
