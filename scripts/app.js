@@ -5,6 +5,7 @@ $("#citySearchBtn").on("click", function(event) {
   event.preventDefault();
   let citySearched = $("#citySearchText").val(); // TODO: Uncomment for live version.
   $("#citySearchText").val("");
+  $("#searchResults").fadeIn();
   getCurrentWeatherConditions(citySearched);
   getFiveDayForecast(citySearched);
 });
@@ -19,6 +20,7 @@ function populateSearchHistory() {
       $("#searchHistoryList").prepend(item);
     }
     $(".list-group-item").on("click", function() {
+      $("#searchResults").fadeIn("slow");
       getCurrentWeatherConditions($(this).text());
       getFiveDayForecast($(this).text());
     });
@@ -182,8 +184,8 @@ function populateForecast(results) {
     let time = list[i].dt_txt.split(" ")[1];
 
     if (time == "12:00:00") {
-      let colDiv = $("<div class='col-md'>");
-      let cardDiv = $("<div class='card'>");
+      let colDiv = $("<div class='col'>");
+      let cardDiv = $("<div class='card forecast-card'>");
       let cardBodyDiv = $("<div class='card-body'>");
 
       let dateDiv = $("<div class='forecast-date'>");
