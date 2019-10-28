@@ -4,11 +4,11 @@
 }
 
 .uv-low {
-  background-color: green;range;
+  background-color: green;
 }
 
 .uv-mod {
-  background-color: yellow;range;
+  background-color: yellow;
 }
 
 .uv-high {
@@ -25,6 +25,6 @@
 
 .uv-low,
 .uv-very-high,
-uv.uv-ext {
+.uv-ext {
   color: white;
 }

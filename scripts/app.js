@@ -1,26 +1,28 @@
 const APIKEY = "79564d65443999fbd44fa53717a9b123";
+populateSearchHistory();
 
 $("#citySearchBtn").on("click", function(event) {
   event.preventDefault();
-  // let citySearched = $("citySearch").val(); // TODO: Uncomment for live version.
-  let citySearched = "seattle"; // For testing
+  let citySearched = $("#citySearchText").val(); // TODO: Uncomment for live version.
+  $("#citySearchText").val("");
   getCurrentWeatherConditions(citySearched);
   getFiveDayForecast(citySearched);
 });
 
 function populateSearchHistory() {
   $("#searchHistoryList").empty();
-  let searchHistory = JSON.parse(localStorage.getItem("storedWeatherData"))
-    .searchHistory;
-  for (let i = 0; i < searchHistory.length; i++) {
-    let item = $("<li class='list-group-item'></li>");
-    item.text(searchHistory[i].cityName);
-    $("#searchHistoryList").prepend(item);
+  let searchHistory = getStoredWeatherData().searchHistory;
+  if (searchHistory) {
+    for (let i = 0; i < searchHistory.length; i++) {
+      let item = $("<li class='list-group-item'></li>");
+      item.text(searchHistory[i].cityName);
+      $("#searchHistoryList").prepend(item);
+    }
+    $(".list-group-item").on("click", function() {
+      getCurrentWeatherConditions($(this).text());
+      getFiveDayForecast($(this).text());
+    });
   }
-  $(".list-group-item").on("click", function() {
-    getCurrentWeatherConditions($(this).text());
-    getFiveDayForecast($(this).text());
-  });
 }
 
 function getStoredWeatherData() {
@@ -54,7 +56,6 @@ function getCurrentWeatherConditions(citySearched) {
           storedWeatherData.data.currentWeather[j].name.toLowerCase() ==
           citySearched
         ) {
-          console.log("from storage");
           populateCurrentWeatherConditions(
             storedWeatherData.data.currentWeather[j]
           );
@@ -67,7 +68,6 @@ function getCurrentWeatherConditions(citySearched) {
     url: queryURL,
     method: "GET"
   }).then(function(results) {
-    console.log("looked up");
     populateCurrentWeatherConditions(results);
     storeCurrentWeather(results);
   });
@@ -116,18 +116,21 @@ function populateUVIndex(lon, lat) {
     method: "GET"
   }).then(function(results) {
     let UVIndex = results.value;
+    let currUVLevel = $("#todaysUVIndex").attr("data-uv-level");
+    $("#todaysUVIndex").removeClass(currUVLevel);
     $("#todaysUVIndex").text(UVIndex);
     if (UVIndex < 3) {
-      $("#todaysUVIndex").addClass("uv-low");
+      $("#todaysUVIndex").attr("data-uv-level", "uv-low");
     } else if (UVIndex < 6) {
-      $("#todaysUVIndex").addClass("uv-mod");
+      $("#todaysUVIndex").attr("data-uv-level", "uv-mod");
     } else if (UVIndex < 8) {
-      $("#todaysUVIndex").addClass("uv-high");
+      $("#todaysUVIndex").attr("data-uv-level", "uv-high");
     } else if (UVIndex < 11) {
-      $("#todaysUVIndex").addClass("uv-very-high");
+      $("#todaysUVIndex").attr("data-uv-level", "uv-very-high");
     } else {
-      $("#todaysUVIndex").addClass("uv-ext");
+      $("#todaysUVIndex").attr("data-uv-level", "uv-ext");
     }
+    $("#todaysUVIndex").addClass($("#todaysUVIndex").attr("data-uv-level"));
   });
 }
 
@@ -149,9 +152,7 @@ function getFiveDayForecast(citySearched) {
           storedWeatherData.data.forecast[j].city.name.toLowerCase() ==
           citySearched.toLowerCase()
         ) {
-          console.log("forecast from storage");
           populateForecast(storedWeatherData.data.forecast[j]);
-          populateSearchHistory();
           return;
         }
       }
@@ -163,7 +164,6 @@ function getFiveDayForecast(citySearched) {
   }).then(function(results) {
     populateForecast(results);
     storeForecast(results, citySearched);
-    populateSearchHistory();
   });
 }
 
@@ -206,6 +206,7 @@ function populateForecast(results) {
       daysForecasted++;
     }
   }
+  populateSearchHistory();
 }
 
 function formatDate(date) {
