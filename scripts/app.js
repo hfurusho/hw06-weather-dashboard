@@ -48,7 +48,7 @@ function getStoredWeatherData() {
 // Looks in local storage for the weather data of the user's search or will
 // makes an API call to get the current weather if not in storage.
 function getCurrentWeatherConditions(citySearched) {
-  let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${citySearched}&units=imperial&appid=${APIKEY}`;
+  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${citySearched}&units=imperial&appid=${APIKEY}`;
   let storedWeatherData = getStoredWeatherData();
   let searchHistory = storedWeatherData.searchHistory;
   let timeNow = new Date().getTime();
@@ -99,7 +99,7 @@ function populateCurrentWeatherConditions(results) {
   let date = new Date(results.dt * 1000);
   let description = results.weather[0].main;
   let humidity = results.main.humidity;
-  let iconURL = `http://openweathermap.org/img/w/${results.weather[0].icon}.png`;
+  let iconURL = `https://openweathermap.org/img/w/${results.weather[0].icon}.png`;
   let temp = results.main.temp;
   let windSpeed = results.wind.speed;
 
@@ -122,7 +122,7 @@ function populateCurrentWeatherConditions(results) {
 // Locates the UV Index of the searched city in local storage
 // or makes an API call to obtain the data.
 function populateUVIndex(lon, lat) {
-  let UVIndexURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${APIKEY}&lat=${lat}&lon=${lon}`;
+  let UVIndexURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${APIKEY}&lat=${lat}&lon=${lon}`;
   $.ajax({
     url: UVIndexURL,
     method: "GET"
@@ -208,7 +208,7 @@ function populateForecast(results) {
       dateDiv.text(date);
 
       let imgElem = $("<img>");
-      let iconURL = `http://openweathermap.org/img/w/${list[i].weather[0].icon}.png`;
+      let iconURL = `https://openweathermap.org/img/w/${list[i].weather[0].icon}.png`;
       imgElem.attr("src", iconURL);
       let temp = list[i].main.temp;
       let pTemp = $(`<p>Temp: ${temp} &degF</p>`);
